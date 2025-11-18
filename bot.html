@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empire X Store - متجر التميز الإمبراطوري</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --gold-primary: #D4AF37;
+            --gold-secondary: #F5D76E;
+            --purple-primary: #5D3FD3;
+            --purple-secondary: #7E5FDB;
+            --dark-primary: #0A0A0A;
+            --dark-secondary: #1A1A1A;
+            --text-light: #FFFFFF;
+            --text-gray: #CCCCCC;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(10, 10, 10, 0.95) 0%, rgba(26, 26, 26, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--gold-primary);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.2);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold-primary);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+            color: var(--gold-primary);
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.7));
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--gold-primary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .cart-icon:hover {
+            color: var(--gold-secondary);
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--purple-primary);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* قائمة الهامبرجر */
+        .hamburger-menu {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .hamburger-menu span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--gold-primary);
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        .hamburger-menu.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-menu.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* القائمة المنبثقة */
+        .mobile-nav {
+            position: fixed;
+            top: 70px;
+            right: -300px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+            backdrop-filter: blur(10px);
+            z-index: 999;
+            transition: var(--transition);
+            padding: 20px;
+            border-left: 2px solid var(--gold-primary);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .mobile-nav-item:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateX(-5px);
+        }
+
+        .mobile-nav-item i {
+            color: var(--gold-primary);
+            font-size: 1.2rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 70px);
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        main {
+            margin-top: 70px;
+            padding: 20px 0;
+        }
+
+        section {
+            margin-bottom: 40px;
+            padding: 20px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--gold-primary);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+        }
+
+        .category-title {
+            text-align: center;
+            margin: 30px 0 20px;
+            color: var(--purple-secondary);
+            font-size: 1.5rem;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .category-title::before, .category-title::after {
+            content: '✦';
+            margin: 0 10px;
+            color: var(--gold-primary);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: linear-gradient(145deg, rgba(26, 26, 26, 0.9) 0%, rgba(10, 10, 10, 0.9) 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+            position: relative;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold-primary), var(--purple-primary), var(--gold-primary));
+            z-index: 1;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+            border-color: var(--gold-primary);
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            color: var(--gold-primary);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold-secondary);
+            text-align: center;
+            margin: 10px 0;
+            text-shadow: 0 0 5px rgba(245, 215, 110, 0.5);
+        }
+
+        .product-description {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .add-to-cart {
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--gold-secondary) 100%);
+            color: var(--dark-primary);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: auto;
+        }
+
+        .add-to-cart:hover {
+            background: linear-gradient(135deg, var(--gold-secondary) 0%, var(--gold-primary) 100%);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.7);
+            transform: scale(1.05);
+        }
+
+        .add-to-cart.added {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            cursor: not-allowed;
+        }
+
+        .add-to-cart.added:hover {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            box-shadow: none;
+            transform: none;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 350px;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            transition: var(--transition);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-left: 2px solid var(--gold-primary);
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .cart-title {
+            font-size: 1.5rem;
+            color: var(--gold-primary);
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            color: var(--gold-primary);
+            transform: rotate(90deg);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .item-details h4 {
+            font-size: 1rem;
+            color: var(--text-light);
+        }
+
+        .item-details p {
+            font-size: 0.9rem;
+            color: var(--gold-secondary);
+        }
+
+        .item-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .remove-item {
+            color: #ff6b6b;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            color: #ff3838;
+            transform: scale(1.2);
+        }
+
+        .cart-total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--gold-primary);
+            text-align: center;
+            margin-bottom: 20px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, var(--purple-primary) 0%, var(--purple-secondary) 100%);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .checkout-btn:hover {
+            background: linear-gradient(135deg, var(--purple-secondary) 0%, var(--purple-primary) 100%);
+            box-shadow: 0 0 15px rgba(93, 63, 211, 0.7);
+            transform: scale(1.05);
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1500;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .buy-section {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(26, 26, 26, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .buy-btn {
+            background: linear-gradient(135deg, var(--gold-primary) 0%, var(--purple-primary) 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(93, 63, 211, 0.3);
+        }
+
+        .buy-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(93, 63, 211, 0.5);
+        }
+
+        footer {
+            background: linear-gradient(135deg, var(--dark-primary) 0%, var(--dark-secondary) 100%);
+            padding: 30px 0;
+            text-align: center;
+            border-top: 2px solid var(--gold-primary);
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-gray);
+        }
+
+        .contact-info i {
+            color: var(--gold-primary);
+        }
+
+        .copyright {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .gold-glow {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+        }
+
+        .purple-glow {
+            text-shadow: 0 0 10px rgba(93, 63, 211, 0.7);
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            
+            .cart-sidebar {
+                width: 300px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.7rem;
+            }
+            
+            main {
+                margin-top: 70px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+            
+            .section-title h2 {
+                font-size: 1.5rem;
+            }
+            
+            .logo {
+                font-size: 1.2rem;
+            }
+            
+            main {
+                margin-top: 70px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الرأس -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>Empire X Store</span>
+                </div>
+                <div class="header-actions">
+                    <div class="cart-icon" id="cartIcon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </div>
+                    <div class="hamburger-menu" id="hamburgerMenu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- القائمة المنبثقة للهواتف -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#promotions" class="mobile-nav-item" onclick="toggleMobileNav()">
+            <i class="fas fa-arrow-up"></i>
+            <span>الترقيات</span>
+        </a>
+        <a href="#admin" class="mobile-nav-item" onclick="toggleMobileNav()">
+            <i class="fas fa-user-shield"></i>
+            <span>رتب الإشراف</span>
+        </a>
+        <a href="#members" class="mobile-nav-item" onclick="toggleMobileNav()">
+            <i class="fas fa-user-plus"></i>
+            <span>إضافة الأعضاء</span>
+        </a>
+        <a href="#suggestions" class="mobile-nav-item" onclick="toggleMobileNav()">
+            <i class="fas fa-lightbulb"></i>
+            <span>تقديم اقتراح</span>
+        </a>
+        <a href="#naughty-cards" class="mobile-nav-item" onclick="toggleMobileNav()">
+            <i class="fas fa-theater-masks"></i>
+            <span>بطاقات النذالة</span>
+        </a>
+        <a href="#buy-section" class="mobile-nav-item" onclick="toggleMobileNav()">
+            <i class="fab fa-whatsapp"></i>
+            <span>إتمام الشراء</span>
+        </a>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        <!-- قسم الترقيات -->
+        <section id="promotions">
+            <div class="section-title">
+                <h2>الترقيات</h2>
+            </div>
+            <div class="products-grid">
+                <!-- بطاقة New Soul -->
+                <div class="product-card floating">
+                    <h3 class="product-title">New Soul</h3>
+                    <p class="product-description">ترقية رائعة للمبتدئين في عالم الإمبراطورية</p>
+                    <div class="product-price">200K</div>
+                    <button class="add-to-cart" data-id="1" data-name="New Soul" data-price="200000" data-category="الترقيات">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة Warrior -->
+                <div class="product-card floating" style="animation-delay: 0.2s;">
+                    <h3 class="product-title">Warrior</h3>
+                    <p class="product-description">للمحاربين الذين يسعون للتميز</p>
+                    <div class="product-price">450K</div>
+                    <button class="add-to-cart" data-id="2" data-name="Warrior" data-price="450000" data-category="الترقيات">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة Guard -->
+                <div class="product-card floating" style="animation-delay: 0.4s;">
+                    <h3 class="product-title">Guard</h3>
+                    <p class="product-description">لحراس الإمبراطورية المخلصين</p>
+                    <div class="product-price">1M</div>
+                    <button class="add-to-cart" data-id="3" data-name="Guard" data-price="1000000" data-category="الترقيات">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة Royal -->
+                <div class="product-card floating" style="animation-delay: 0.6s;">
+                    <h3 class="product-title">Royal</h3>
+                    <p class="product-description">للأعضاء المميزين من العائلة المالكة</p>
+                    <div class="product-price">1.5M</div>
+                    <button class="add-to-cart" data-id="4" data-name="Royal" data-price="1500000" data-category="الترقيات">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة Lord -->
+                <div class="product-card floating" style="animation-delay: 0.8s;">
+                    <h3 class="product-title">Lord</h3>
+                    <p class="product-description">لأعلى مرتبة في التسلسل الهرمي + بطاقة VIP</p>
+                    <div class="product-price">4M</div>
+                    <button class="add-to-cart" data-id="5" data-name="Lord" data-price="4000000" data-category="الترقيات">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الاشراف -->
+        <section id="admin">
+            <div class="section-title">
+                <h2>رتب الإشراف</h2>
+            </div>
+            <div class="products-grid">
+                <!-- بطاقة ادمن في Dar Al-Iman -->
+                <div class="product-card">
+                    <h3 class="product-title">ادمن في Dar Al-Iman</h3>
+                    <p class="product-description">صلاحيات إدارية متكاملة في دار الإيمان</p>
+                    <div class="product-price">600K</div>
+                    <button class="add-to-cart" data-id="6" data-name="ادمن في Dar Al-Iman" data-price="600000" data-category="رتب الإشراف">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة ادمن في جروب الفاعليات -->
+                <div class="product-card">
+                    <h3 class="product-title">ادمن في جروب الفاعليات</h3>
+                    <p class="product-description">إدارة فعاليات الإمبراطورية بكفاءة</p>
+                    <div class="product-price">1.5M</div>
+                    <button class="add-to-cart" data-id="7" data-name="ادمن في جروب الفاعليات" data-price="1500000" data-category="رتب الإشراف">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة ادمن في جروب الفويسات -->
+                <div class="product-card">
+                    <h3 class="product-title">ادمن في جروب الفويسات</h3>
+                    <p class="product-description">سيكون من ضمن المسؤلين في ارسال الفويسات للملكة</p>
+                    <div class="product-price">1M</div>
+                    <button class="add-to-cart" data-id="8" data-name="ادمن في جروب الفويسات" data-price="1000000" data-category="رتب الإشراف">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة ادمن في جروب الاستيكرز -->
+                <div class="product-card">
+                    <h3 class="product-title">ادمن في جروب الاستيكرز</h3>
+                    <p class="product-description">إدارة وإرسال الاستيكرز في الإمبراطورية</p>
+                    <div class="product-price">1M</div>
+                    <button class="add-to-cart" data-id="37" data-name="ادمن في جروب الاستيكرز" data-price="1000000" data-category="رتب الإشراف">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة ادمن في جروب الاعلانات -->
+                <div class="product-card">
+                    <h3 class="product-title">ادمن في جروب الاعلانات</h3>
+                    <p class="product-description">من ضمن المسؤولين للإعلانات الخاصة بالامبراطورية</p>
+                    <div class="product-price">2.5M</div>
+                    <button class="add-to-cart" data-id="38" data-name="ادمن في جروب الاعلانات" data-price="2500000" data-category="رتب الإشراف">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم اضافة الأعضاء -->
+        <section id="members">
+            <div class="section-title">
+                <h2>إضافة الأعضاء</h2>
+            </div>
+            <div class="products-grid">
+                <!-- بطاقة اضافة عضو واحد -->
+                <div class="product-card">
+                    <h3 class="product-title">إضافة عضو واحد</h3>
+                    <p class="product-description">مكافأة على إضافة عضو جديد للإمبراطورية</p>
+                    <div class="product-price">20K مكافأة</div>
+                    <button class="add-to-cart" data-id="9" data-name="إضافة عضو واحد" data-price="0" data-deposit="true" data-category="إضافة الأعضاء">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة اضافة عضوين -->
+                <div class="product-card">
+                    <h3 class="product-title">إضافة عضوين</h3>
+                    <p class="product-description">مكافأة مضاعفة على إضافة عضوين</p>
+                    <div class="product-price">45K مكافأة</div>
+                    <button class="add-to-cart" data-id="10" data-name="إضافة عضوين" data-price="0" data-deposit="true" data-category="إضافة الأعضاء">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة اضافة ثلاثة أعضاء -->
+                <div class="product-card">
+                    <h3 class="product-title">إضافة ثلاثة أعضاء</h3>
+                    <p class="product-description">مكافأة كبيرة على إضافة ثلاثة أعضاء</p>
+                    <div class="product-price">70K مكافأة</div>
+                    <button class="add-to-cart" data-id="11" data-name="إضافة ثلاثة أعضاء" data-price="0" data-deposit="true" data-category="إضافة الأعضاء">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم تقديم اقتراح -->
+        <section id="suggestions">
+            <div class="section-title">
+                <h2>تقديم اقتراح</h2>
+            </div>
+            <div class="products-grid">
+                <!-- بطاقة اقتراح فاعلية جديدة -->
+                <div class="product-card">
+                    <h3 class="product-title">اقتراح فاعلية جديدة</h3>
+                    <p class="product-description">تقديم اقتراح لفاعلية جديدة في الإمبراطورية</p>
+                    <div class="product-price">30K مكافأة</div>
+                    <button class="add-to-cart" data-id="39" data-name="اقتراح فاعلية جديدة" data-price="0" data-deposit="true" data-category="تقديم اقتراح">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <!-- بطاقة تقديم فكرة منصب جديد -->
+                <div class="product-card">
+                    <h3 class="product-title">تقديم فكرة منصب جديد</h3>
+                    <p class="product-description">تقديم فكرة لمنصب جديد في هيكل الإمبراطورية</p>
+                    <div class="product-price">20K مكافأة</div>
+                    <button class="add-to-cart" data-id="40" data-name="تقديم فكرة منصب جديد" data-price="0" data-deposit="true" data-category="تقديم اقتراح">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم بطاقات النذالة -->
+        <section id="naughty-cards">
+            <div class="section-title">
+                <h2>بطاقات النذالة</h2>
+            </div>
+            
+            <!-- فئة بطاقات الهبد -->
+            <h3 class="category-title">1️⃣ بطاقات الهبد</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3 class="product-title">ملك الهبد</h3>
+                    <p class="product-description">لأعظم الهبدة في الإمبراطورية</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="12" data-name="ملك الهبد" data-price="100000" data-category="بطاقات النذالة - الهبد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">جنرال الهري</h3>
+                    <p class="product-description">للقادة العظماء في عالم الهري</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="13" data-name="جنرال الهري" data-price="100000" data-category="بطاقات النذالة - الهبد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">وزير اللغوصة</h3>
+                    <p class="product-description">لأعماق اللغوصة والهبد المميز</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="14" data-name="وزير اللغوصة" data-price="100000" data-category="بطاقات النذالة - الهبد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">هبدست Max</h3>
+                    <p class="product-description">للهبدة القصوى بلا منافس</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="15" data-name="هبدست Max" data-price="100000" data-category="بطاقات النذالة - الهبد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+            
+            <!-- فئة بطاقات التوهان -->
+            <h3 class="category-title">2️⃣ بطاقات التوهان</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3 class="product-title">فاقد التركيز</h3>
+                    <p class="product-description">للتائهين في عالم الإمبراطورية</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="16" data-name="فاقد التركيز" data-price="100000" data-category="بطاقات النذالة - التوهان">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">عقل مؤقت</h3>
+                    <p class="product-description">للعقول التي تختفي وتظهر</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="17" data-name="عقل مؤقت" data-price="100000" data-category="بطاقات النذالة - التوهان">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">نص مخ</h3>
+                    <p class="product-description">لأصحاب العقول الناقصة</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="18" data-name="نص مخ" data-price="100000" data-category="بطاقات النذالة - التوهان">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">تائه دولي</h3>
+                    <p class="product-description">للتائهين في كل الأماكن</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="19" data-name="تائه دولي" data-price="100000" data-category="بطاقات النذالة - التوهان">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+            
+            <!-- فئة بطاقات النكد -->
+            <h3 class="category-title">3️⃣ بطاقات النكد</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3 class="product-title">ممثل النكد</h3>
+                    <p class="product-description">لنجوم النكد والزعل المتقنين</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="20" data-name="ممثل النكد" data-price="100000" data-category="بطاقات النذالة - النكد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">أسطورة الزعل</h3>
+                    <p class="product-description">لأساطير الزعل والنكد</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="21" data-name="أسطورة الزعل" data-price="100000" data-category="بطاقات النذالة - النكد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">كائن الدراما</h3>
+                    <p class="product-description">لمحبي الدراما والمشاكل</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="22" data-name="كائن الدراما" data-price="100000" data-category="بطاقات النذالة - النكد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">مفعّل وضع الكآبة</h3>
+                    <p class="product-description">للمبرمجين في عالم الكآبة</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="23" data-name="مفعّل وضع الكآبة" data-price="100000" data-category="بطاقات النذالة - النكد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">نكدستان VIP</h3>
+                    <p class="product-description">لأعضاء النكد المميزين</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="24" data-name="نكدستان VIP" data-price="100000" data-category="بطاقات النذالة - النكد">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+            
+            <!-- فئة بطاقات الكسل -->
+            <h3 class="category-title">4️⃣ بطاقات الكسل</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3 class="product-title">أمير الكسل</h3>
+                    <p class="product-description">لأمراء الكسل والخمول</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="25" data-name="أمير الكسل" data-price="100000" data-category="بطاقات النذالة - الكسل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">نعسانجا</h3>
+                    <p class="product-description">لأبطال النوم والسهر</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="26" data-name="نعسانجا" data-price="100000" data-category="بطاقات النذالة - الكسل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">باردستان</h3>
+                    <p class="product-description">للمملكة الباردة والكسل</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="27" data-name="باردستان" data-price="100000" data-category="بطاقات النذالة - الكسل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+            
+            <!-- فئة بطاقات الاستظراف الفاشل -->
+            <h3 class="category-title">5️⃣ بطاقات الاستظراف الفاشل</h3>
+            <div class="products-grid">
+                <div class="product-card">
+                    <h3 class="product-title">كوميديان فاشل</h3>
+                    <p class="product-description">للفاشلين في عالم الكوميديا</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="28" data-name="كوميديان فاشل" data-price="100000" data-category="بطاقات النذالة - الاستظراف الفاشل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">نمس الضحك</h3>
+                    <p class="product-description">لضباط الضحك الفاشل</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="29" data-name="نمس الضحك" data-price="100000" data-category="بطاقات النذالة - الاستظراف الفاشل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">مستر بارد</h3>
+                    <p class="product-description">لأسياد البرودة والضحك الفاشل</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="30" data-name="مستر بارد" data-price="100000" data-category="بطاقات النذالة - الاستظراف الفاشل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">ضحكتك مش لازمة</h3>
+                    <p class="product-description">للضحكات غير المرغوب فيها</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="31" data-name="ضحكتك مش لازمة" data-price="100000" data-category="بطاقات النذالة - الاستظراف الفاشل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+                
+                <div class="product-card">
+                    <h3 class="product-title">قافش غلط</h3>
+                    <p class="product-description">للقافشين في الأوقات الخطأ</p>
+                    <div class="product-price">100K</div>
+                    <button class="add-to-cart" data-id="32" data-name="قافش غلط" data-price="100000" data-category="بطاقات النذالة - الاستظراف الفاشل">
+                        <i class="fas fa-cart-plus"></i> إضافة للسلة
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- قسم الشراء -->
+        <section class="buy-section" id="buy-section">
+            <button class="buy-btn" id="buyBtn">
+                <i class="fab fa-whatsapp"></i> اتمام الشراء عبر واتساب
+            </button>
+            <button class="buy-btn" id="clearCartBtn" style="margin-top: 10px; background: linear-gradient(135deg, #ff6b6b, #ee5a52);">
+                <i class="fas fa-trash"></i> مسح السلة
+            </button>
+        </section>
+    </main>
+
+    <!-- سلة التسوق -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3 class="cart-title">سلة التسوق</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- سيتم إضافة العناصر هنا ديناميكيًا -->
+        </div>
+        <div class="cart-total" id="cartTotal">المجموع: 0</div>
+        <button class="checkout-btn" id="checkoutBtn">
+            <i class="fas fa-shopping-bag"></i> اتمام الطلب
+        </button>
+    </div>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="contact-info">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>+20 10 80182839</span>
+                </div>
+                <div class="copyright">
+                    جميع الحقوق محفوظة &copy; 2023 Empire X Store
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // بيانات التطبيق
+        let cart = [];
+        const cartIcon = document.getElementById('cartIcon');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const closeCart = document.getElementById('closeCart');
+        const overlay = document.getElementById('overlay');
+        const cartItems = document.getElementById('cartItems');
+        const cartTotal = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const buyBtn = document.getElementById('buyBtn');
+        const clearCartBtn = document.getElementById('clearCartBtn');
+        const addToCartButtons = document.querySelectorAll('.add-to-cart');
+        
+        // عناصر القائمة المتنقلة
+        const hamburgerMenu = document.getElementById('hamburgerMenu');
+        const mobileNav = document.getElementById('mobileNav');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+
+        // تحميل السلة من localStorage عند بدء التحميل
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCartFromLocalStorage();
+            updateCart();
+            updateCartCount();
+            updateButtonsState();
+        });
+
+        // فتح وإغلاق سلة التسوق
+        cartIcon.addEventListener('click', () => {
+            cartSidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // فتح وإغلاق القائمة المتنقلة
+        hamburgerMenu.addEventListener('click', toggleMobileNav);
+        mobileNavOverlay.addEventListener('click', toggleMobileNav);
+
+        function toggleMobileNav() {
+            hamburgerMenu.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            mobileNavOverlay.classList.toggle('active');
+        }
+
+        // إضافة عناصر إلى السلة
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const id = button.getAttribute('data-id');
+                const name = button.getAttribute('data-name');
+                const price = parseInt(button.getAttribute('data-price'));
+                const isDeposit = button.hasAttribute('data-deposit');
+                const category = button.getAttribute('data-category');
+                
+                // التحقق مما إذا كان العنصر مضافًا بالفعل
+                if (isItemInCart(id)) {
+                    showNotification('هذا العنصر مضاف مسبقًا إلى السلة', 'warning');
+                    return;
+                }
+                
+                addToCart(id, name, price, isDeposit, category);
+                
+                // تحديث حالة الزر
+                updateButtonState(button, true);
+            });
+        });
+
+        // تحميل السلة من localStorage
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('empireXCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                showNotification('تم استعادة العناصر المحفوظة في السلة', 'success');
+            }
+        }
+
+        // حفظ السلة في localStorage
+        function saveCartToLocalStorage() {
+            localStorage.setItem('empireXCart', JSON.stringify(cart));
+        }
+
+        // مسح السلة
+        clearCartBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('السلة فارغة بالفعل!', 'warning');
+                return;
+            }
+            
+            if (confirm('هل أنت متأكد من رغبتك في مسح كل العناصر من السلة؟')) {
+                cart = [];
+                updateCart();
+                updateCartCount();
+                updateButtonsState();
+                saveCartToLocalStorage();
+                showNotification('تم مسح السلة بنجاح', 'success');
+            }
+        });
+
+        // التحقق من وجود العنصر في السلة
+        function isItemInCart(id) {
+            return cart.some(item => item.id === id);
+        }
+
+        // تحديث حالة جميع أزرار الإضافة
+        function updateButtonsState() {
+            addToCartButtons.forEach(button => {
+                const id = button.getAttribute('data-id');
+                updateButtonState(button, isItemInCart(id));
+            });
+        }
+
+        // تحديث حالة زر الإضافة
+        function updateButtonState(button, isAdded) {
+            if (isAdded) {
+                button.innerHTML = '<i class="fas fa-check"></i> مضاف للسلة';
+                button.classList.add('added');
+                button.disabled = true;
+            } else {
+                button.innerHTML = '<i class="fas fa-cart-plus"></i> إضافة للسلة';
+                button.classList.remove('added');
+                button.disabled = false;
+            }
+        }
+
+        // وظيفة إضافة عنصر للسلة
+        function addToCart(id, name, price, isDeposit, category) {
+            cart.push({
+                id,
+                name,
+                price,
+                isDeposit,
+                category,
+                quantity: 1
+            });
+            
+            updateCart();
+            updateCartCount();
+            saveCartToLocalStorage();
+            
+            // تأثير عداد السلة
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.style.transform = 'scale(1.3)';
+            
+            setTimeout(() => {
+                cartCount.style.transform = 'scale(1)';
+            }, 300);
+            
+            showNotification('تم إضافة العنصر إلى السلة بنجاح', 'success');
+        }
+
+        // عرض الإشعارات
+        function showNotification(message, type) {
+            // إنشاء عنصر الإشعار
+            const notification = document.createElement('div');
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.padding = '15px 20px';
+            notification.style.borderRadius = '8px';
+            notification.style.zIndex = '3000';
+            notification.style.fontWeight = 'bold';
+            notification.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.3)';
+            notification.style.transition = 'all 0.3s ease';
+            
+            // تخصيص الألوان حسب نوع الإشعار
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                notification.style.color = 'white';
+            } else if (type === 'warning') {
+                notification.style.background = 'linear-gradient(135deg, #ff9800, #e68900)';
+                notification.style.color = 'white';
+            } else {
+                notification.style.background = 'linear-gradient(135deg, var(--gold-primary), var(--gold-secondary))';
+                notification.style.color = 'var(--dark-primary)';
+            }
+            
+            // إضافة الإشعار إلى الصفحة
+            document.body.appendChild(notification);
+            
+            // إزالة الإشعار بعد 3 ثوانٍ
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(-50%) translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // تحديث عرض السلة
+        function updateCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p style="text-align: center; color: var(--text-gray);">سلة التسوق فارغة</p>';
+                cartTotal.textContent = 'المجموع: 0';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <div class="item-details">
+                        <h4>${item.name}</h4>
+                        <p>${item.isDeposit ? 'ايداع' : formatPrice(item.price)}</p>
+                    </div>
+                    <div class="item-actions">
+                        <button class="remove-item" data-id="${item.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `المجموع: ${formatPrice(total)}`;
+            
+            // إضافة مستمعي الأحداث للأزرار الجديدة
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', () => {
+                    const id = button.getAttribute('data-id');
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // تنسيق السعر لعرضه بشكل مناسب
+        function formatPrice(price) {
+            if (price === 0) return 'ايداع';
+            
+            if (price >= 1000000) {
+                return (price / 1000000).toFixed(1).replace('.0', '') + 'M دينار';
+            } else if (price >= 1000) {
+                return (price / 1000).toFixed(1).replace('.0', '') + 'K دينار';
+            } else {
+                return price.toLocaleString() + ' دينار';
+            }
+        }
+
+        // إزالة عنصر من السلة
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            
+            updateCart();
+            updateCartCount();
+            updateButtonsState();
+            saveCartToLocalStorage();
+            
+            showNotification('تم إزالة العنصر من السلة', 'success');
+        }
+
+        // تحديث عداد السلة
+        function updateCartCount() {
+            const cartCount = document.querySelector('.cart-count');
+            cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+
+        // إتمام الطلب
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('سلة التسوق فارغة!', 'warning');
+                return;
+            }
+            
+            sendWhatsAppMessage();
+        });
+
+        buyBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('سلة التسوق فارغة!', 'warning');
+                return;
+            }
+            
+            sendWhatsAppMessage();
+        });
+
+        // إرسال رسالة واتساب
+        function sendWhatsAppMessage() {
+            let message = `مرحباً، أريد شراء المنتجات التالية من Empire X Store:\n\n`;
+            
+            // تجميع العناصر حسب القسم
+            const categories = {};
+            
+            cart.forEach(item => {
+                if (!categories[item.category]) {
+                    categories[item.category] = [];
+                }
+                categories[item.category].push(item);
+            });
+            
+            // إضافة العناصر حسب الأقسام
+            for (const [category, items] of Object.entries(categories)) {
+                message += `🔸 ${category}:\n`;
+                
+                items.forEach(item => {
+                    if (item.isDeposit) {
+                        message += `   - ${item.name} (ايداع)\n`;
+                    } else {
+                        message += `   - ${item.name} - ${formatPrice(item.price)}\n`;
+                    }
+                });
+                
+                message += '\n';
+            }
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            message += `💰 المجموع الكلي: ${formatPrice(total)}`;
+            message += `\n🕒 التاريخ والوقت: ${new Date().toLocaleString('ar-EG')}`;
+            message += `\n\nشكراً لخدمتكم! 🌟`;
+            
+            const phoneNumber = "+201080182839";
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+            
+            window.open(whatsappURL, '_blank');
+            
+            // إغلاق السلة بعد الإرسال
+            cartSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            
+            // تفريغ السلة بعد الإرسال
+            cart = [];
+            updateCart();
+            updateCartCount();
+            updateButtonsState();
+            saveCartToLocalStorage();
+        }
+    </script>
+</body>
+</html>
